@@ -13,15 +13,15 @@ def test_stack_list():
     stack.push(24)
     stack.push(-31)
     stack.push(0)
-    assert stack.print() == '[2, 24, -31, 0]'
+    assert stack.to_string() == '[2, 24, -31, 0]'
 
     # test pop()
     stack.pop()
     stack.pop()
-    assert stack.print() == '[2, 24]'
+    assert stack.to_string() == '[2, 24]'
     stack.pop()
     stack.pop()
-    assert stack.print() == '[]'
+    assert stack.to_string() == '[]'
     stack.pop()
 
     # test peek()
@@ -32,18 +32,18 @@ def test_stack_list():
     stack.pop()
     stack.pop()
     assert stack.peek() == None
-    assert stack.print() == '[]'
+    assert stack.to_string() == '[]'
 
-    # test isEmpty()
-    assert stack.isEmpty()
+    # test is_empty()
+    assert stack.is_empty()
     stack.push(10)
-    assert not stack.isEmpty()
+    assert not stack.is_empty()
 
     # test nuke()
-    assert stack.print() == '[10]'
+    assert stack.to_string() == '[10]'
     stack.nuke()
-    assert stack.isEmpty()
-    assert stack.print() == '[]'
+    assert stack.is_empty()
+    assert stack.to_string() == '[]'
 
 
 def test_stack_linked_list():
@@ -60,15 +60,15 @@ def test_stack_linked_list():
     stack.push(node_2)
     stack.push(node_3)
     stack.push(node_4)
-    assert stack.print() == '0 -> -31 -> 24 -> 2 -> '
+    assert stack.to_string() == '0 -> -31 -> 24 -> 2 -> '
 
     # test pop()
     stack.pop()
     stack.pop()
-    assert stack.print() == '24 -> 2 -> '
+    assert stack.to_string() == '24 -> 2 -> '
     stack.pop()
     stack.pop()
-    assert stack.print() == ''
+    assert stack.to_string() == ''
     stack.pop()
 
     # test peek()
@@ -81,16 +81,16 @@ def test_stack_linked_list():
     stack.pop()
     stack.pop()
     assert stack.peek() == None
-    assert stack.print() == ''
+    assert stack.to_string() == ''
 
-    # test isEmpty()
-    assert stack.isEmpty()
+    # test is_empty()
+    assert stack.is_empty()
     node_7 = Node(10)
     stack.push(node_7)
-    assert not stack.isEmpty()
+    assert not stack.is_empty()
 
     # test nuke()
-    assert stack.print() == '10 -> '
+    assert stack.to_string() == '10 -> '
     stack.nuke()
-    assert stack.isEmpty()
-    assert stack.print() == ''
+    assert stack.is_empty()
+    assert stack.to_string() == ''

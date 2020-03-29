@@ -13,15 +13,15 @@ def test_queue_list():
     queue.enqueue(24)
     queue.enqueue(-31)
     queue.enqueue(0)
-    assert queue.print() == '[2, 24, -31, 0]'
+    assert queue.to_string() == '[2, 24, -31, 0]'
 
     # test dequeue()
     queue.dequeue()
     queue.dequeue()
-    assert queue.print() == '[-31, 0]'
+    assert queue.to_string() == '[-31, 0]'
     queue.dequeue()
     queue.dequeue()
-    assert queue.print() == '[]'
+    assert queue.to_string() == '[]'
     queue.dequeue()
 
     # test peek()
@@ -32,18 +32,18 @@ def test_queue_list():
     queue.dequeue()
     queue.dequeue()
     assert queue.peek() == None
-    assert queue.print() == '[]'
+    assert queue.to_string() == '[]'
 
-    # test isEmpty()
-    assert queue.isEmpty()
+    # test is_empty()
+    assert queue.is_empty()
     queue.enqueue(10)
-    assert not queue.isEmpty()
+    assert not queue.is_empty()
 
     # test nuke()
-    assert queue.print() == '[10]'
+    assert queue.to_string() == '[10]'
     queue.nuke()
-    assert queue.isEmpty()
-    assert queue.print() == '[]'
+    assert queue.is_empty()
+    assert queue.to_string() == '[]'
 
 
 def test_queue_linked_list():
@@ -60,15 +60,15 @@ def test_queue_linked_list():
     queue.enqueue(node_2)
     queue.enqueue(node_3)
     queue.enqueue(node_4)
-    assert queue.print() == '2 -> 24 -> -31 -> 0 -> '
+    assert queue.to_string() == '2 -> 24 -> -31 -> 0 -> '
 
     # test dequeue()
     queue.dequeue()
     queue.dequeue()
-    assert queue.print() == '-31 -> 0 -> '
+    assert queue.to_string() == '-31 -> 0 -> '
     queue.dequeue()
     queue.dequeue()
-    assert queue.print() == ''
+    assert queue.to_string() == ''
     queue.dequeue()
 
     # test peek()
@@ -81,16 +81,16 @@ def test_queue_linked_list():
     queue.dequeue()
     queue.dequeue()
     assert queue.peek() == None
-    assert queue.print() == ''
+    assert queue.to_string() == ''
 
-    # test isEmpty()
-    assert queue.isEmpty()
+    # test is_empty()
+    assert queue.is_empty()
     node_7 = Node(10)
     queue.enqueue(node_7)
-    assert not queue.isEmpty()
+    assert not queue.is_empty()
 
     # test nuke()
-    assert queue.print() == '10 -> '
+    assert queue.to_string() == '10 -> '
     queue.nuke()
-    assert queue.isEmpty()
-    assert queue.print() == ''
+    assert queue.is_empty()
+    assert queue.to_string() == ''
