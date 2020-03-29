@@ -4,14 +4,14 @@ from LinkedList import Node
 
 def test_linked_list():
 
-    # make initial nodes
+    # initialize nodes and linked list
     node_1 = Node(2)
     node_2 = Node(24)
     node_3 = Node(-31)
     node_4 = Node(0)
+    ll = LinkedList(node_1)
 
     # test append()
-    ll = LinkedList(node_1)
     ll.append(node_2)
     ll.append(node_3)
     ll.append(node_4)
