@@ -3,16 +3,16 @@
 # O(n) space complexity
 
 
-def merge_sort(inputList):
+def merge_sort(input_list):
 
     # return if list only has one element
-    if len(inputList) <= 1:
+    if len(input_list) <= 1:
         return
 
     # find the middle index and use it to split the list
-    mid = len(inputList)//2
-    lower = inputList[:mid]
-    upper = inputList[mid:]
+    mid = len(input_list)//2
+    lower = input_list[:mid]
+    upper = input_list[mid:]
 
     # recursively call merge_sort on the upper and lower halves
     merge_sort(lower)
@@ -24,23 +24,23 @@ def merge_sort(inputList):
 
         # choose the lower[i] since it is smaller
         if lower[i] < upper[j]:
-            inputList[k] = lower[i]
+            input_list[k] = lower[i]
             i += 1
         # choose the upper[j] since it is smaller
         else:
-            inputList[k] = upper[j]
+            input_list[k] = upper[j]
             j += 1
         # increment the position counter for the combined list
         k += 1
 
     # fill in the remaining elements from lower
     while i < len(lower):
-        inputList[k] = lower[i]
+        input_list[k] = lower[i]
         i += 1
         k += 1
 
     # fill in the remaining elements from upper
     while j < len(upper):
-        inputList[k] = upper[j]
+        input_list[k] = upper[j]
         j += 1
         k += 1
