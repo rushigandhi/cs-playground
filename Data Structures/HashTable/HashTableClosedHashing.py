@@ -10,9 +10,9 @@ class Status(Enum):
 
 # this is the class for a bucket which stores the data in a hash table
 class Bucket():
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
+    def __init__(self):
+        self.key = None
+        self.value = None
         self.status = Status.EMPTY
 
 
@@ -45,18 +45,17 @@ class HashTable():
         index = self.get_hash(key, number_of_buckets)
 
         # stop if you find a index that is not active
-        while Status.ACTIVE != self.storage[index].status:
+        while Status.ACTIVE == self.storage[index].status:
 
             # if the key is same, we can update it
             if self.storage[index].key == key:
                 break
-
             index = (index + 1) % number_of_buckets
 
         # save the key, value pair and increment the number of active elements
-        table[index].key = key
-        table[index].value = value
-        table[index].status = Status.ACTIVE
+        self.storage[index].key = key
+        self.storage[index].value = value
+        self.storage[index].status = Status.ACTIVE
         self.number_of_active_elements += 1
 
     # lookup_key_index returns the index at which the input key and it's respective data is stored
@@ -95,6 +94,14 @@ class HashTable():
         else:
             return self.storage[index].value
 
+    # remove will eliminate that key-value pair from the hash table
+    def remove(self, key):
+
+        # set bucket's status to ZOMBIE
+        index = self.lookup_key_index(key)
+        self.storage[index].status = Status.ZOMBIE
+        self.number_of_active_elements -= 1
+
     # nuke removes all the elements from storage by setting it to an empty list
     def nuke(self):
         self.storage = []
@@ -109,4 +116,6 @@ class HashTable():
 
             if Status.ACTIVE == self.storage[i].status:
                 output += str(i) + ' <' + \
-                    self.storage[i].key + ',' + self.storage[i].value + '>\n'
+                    str(self.storage[i].key) + ',' + \
+                    str(self.storage[i].value) + '>\n'
+        return output

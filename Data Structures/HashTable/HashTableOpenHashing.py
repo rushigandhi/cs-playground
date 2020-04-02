@@ -24,20 +24,24 @@ class HashTable():
         # get the number of buckets, index of the input key, and the corresponding bucket
         number_of_buckets = len(self.storage)
         index = self.get_hash(key, number_of_buckets)
+
         curr_node = self.storage[index]
 
         # if bucket is empty, made this node the start of the linked list
         if not curr_node:
-            curr_node = Node(key, value)
+            self.storage[index] = Node(key, value)
 
-        # traverse the list to get the to end of the list
         else:
+            # case where the key matches the first element in the bucket, so we update
+            if curr_node.key == key:
+                curr_node.value = value
+                return
+            # traverse the list to get the to end of the list
             while curr_node and curr_node.next:
-
-                # if key already exists, update the value
                 if curr_node.key == key:
                     curr_node.value = value
                     return
+                curr_node = curr_node.next
 
             # add the new node to the end of the list
             curr_node.next = Node(key, value)
@@ -74,6 +78,24 @@ class HashTable():
 
         return ''
 
+    # remove will eliminate that key-value pair from the hash table
+    def remove(self, key):
+
+        # get the number of buckets, index of the input key, and the corresponding bucket
+        number_of_buckets = len(self.storage)
+        index = self.get_hash(key, number_of_buckets)
+        curr_node = self.storage[index]
+
+        # case where the key matches the first element in the bucket, so we update
+        if curr_node and curr_node.key == key:
+            self.storage[index] = curr_node.next
+            return
+        # traverse the list to get the to end of the list
+        while curr_node and curr_node.next:
+            if curr_node.next.key == key:
+                curr_node.next = curr_node.next.next
+                return
+
     # nuke removes all the elements from storage by setting it to an empty list
     def nuke(self):
         self.storage = []
@@ -85,9 +107,11 @@ class HashTable():
         output = ''
 
         for i in range(number_of_buckets):
-
             curr_node = self.storage[i]
             while curr_node:
                 output += str(i) + ' <' + \
-                    self.storage[i].key + ',' + self.storage[i].value + '>\n'
+                    str(curr_node.key) + ',' + \
+                    str(curr_node.value) + '>\n'
                 curr_node = curr_node.next
+
+        return output
