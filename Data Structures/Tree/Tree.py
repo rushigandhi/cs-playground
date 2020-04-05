@@ -55,8 +55,8 @@ class Tree:
     # preorder_traversal traverses through the tree in (parent, left -> right children) fashion
     def preorder_traversal(self, root):
         if self.is_empty(root):
-            return
-        output = str(root.value) + ", "
+            return ''
+        output = str(root.value) + ', '
         for child in root.children:
             output += self.preorder_traversal(child)
         return output
@@ -64,7 +64,7 @@ class Tree:
     # postorder_traversal traverses through the tree in (left -> right children, parent) fashion
     def postorder_traversal(self, root):
         if self.is_empty(root):
-            return
+            return ''
         output = ''
         for child in root.children:
             output += self.postorder_traversal(child)
