@@ -20,8 +20,8 @@ keys greater than that node's key
 class BinarySearchTree:
 
     # initialize the root node to None
-    def __init__(self, key):
-        self.root = None
+    def __init__(self, key, data):
+        self.root = Node(key, data)
 
     # call the private recursive has function
     def has(self, key):
@@ -78,15 +78,17 @@ class BinarySearchTree:
 
         # if node is empty insert the node
         if self.is_empty(root):
-            root = Node(key, data)
+            return Node(key, data)
 
         # if desired key is less than the current key, traverse through the left subtree
         elif key < root.key:
-            return self.__insert__(root.left, key, data)
+            root.left = self.__insert__(root.left, key, data)
 
         # else since the desired key is greater than the current key, traverse through the right subtree
         else:
-            return self.__insert__(root.right, key, data)
+            root.right = self.__insert__(root.right, key, data)
+
+        return root
 
     # min_value_node returns the ndoe with the smallest key in that tree
     def __min_value_node__(self, node):
@@ -99,6 +101,11 @@ class BinarySearchTree:
 
     # call the private recursive delete function
     def delete(self, key):
+
+        # if the node is the last element in the list, remember to set self.root to None
+        if self.height() == 0 and key == self.root.key:
+            self.nuke()
+            return
         self.__delete__(self.root, key)
 
     def __delete__(self, root, key):
@@ -125,6 +132,7 @@ class BinarySearchTree:
 
             # copy the successor's content into this node
             root.key = temp.key
+            root.data = temp.data
 
             # delete the inorder successor
             root.right = self.__delete__(root.right, temp.key)
@@ -138,6 +146,19 @@ class BinarySearchTree:
             root.right = self.__delete__(root.right, key)
 
         return root
+    # call the private recursive height function
+
+    def height(self):
+        if self.root == None:
+            return 0
+        return self.__height__(self.root) - 1
+
+    # height returns the length of the longest path from the root to a leaf
+    def __height__(self, root):
+        if self.is_empty(root):
+            return 0
+        # height of a tree is 1 + the max of it's left and right subtrees
+        return 1 + max(self.__height__(root.left), self.__height__(root.right))
 
     # call the private recursive preorder_traversal function
     def preorder_traversal(self):
@@ -147,7 +168,7 @@ class BinarySearchTree:
     def __preorder_traversal__(self, root):
         if self.is_empty(root):
             return ''
-        output = str(root.key) + ', '
+        output = str(root.data) + ', '
         output += self.__preorder_traversal__(root.left)
         output += self.__preorder_traversal__(root.right)
         return output
@@ -163,7 +184,7 @@ class BinarySearchTree:
         output = ''
         output += self.__postorder_traversal__(root.left)
         output += self.__postorder_traversal__(root.right)
-        return output + str(root.key) + ', '
+        return output + str(root.data) + ', '
 
     def inorder_traversal(self):
         return self.__inorder_traversal__(self.root)
@@ -173,13 +194,14 @@ class BinarySearchTree:
         if self.is_empty(root):
             return ''
         output = ''
-        output += self.__postorder_traversal__(root.left)
-        output += str(root.key)
-        return output + self.__postorder_traversal__(root.right) + ', '
+        output += self.__inorder_traversal__(root.left)
+        output += str(root.data) + ', '
+        output += self.__inorder_traversal__(root.right)
+        return output
 
-    # is_empty checks if the root is empty
-    def is_empty(self):
-        return self.root == None
+    # is_empty checks if the input subtree is empty
+    def is_empty(self, root):
+        return root == None
 
     # nuke sets the root to None
     def nuke(self):
